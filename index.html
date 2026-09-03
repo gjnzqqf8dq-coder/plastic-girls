@@ -370,6 +370,12 @@ const yen   = n => n.toLocaleString("ja-JP");
 const LS    = "pg239_v2";
 const TOPIC = "pg239/9f4a2c7b8e615d03/state";
 const ME    = "d" + Math.random().toString(36).slice(2,10);
+/* 1台のブローカーに依存しない。どれか1つでも生きていれば同期は続く。 */
+const BROKERS = [
+  "wss://test.mosquitto.org:8081/mqtt",
+  "wss://broker.emqx.io:8084/mqtt",
+  "wss://broker.hivemq.com:8884/mqtt"
+];
 
 const blank = () => ({sales:{}, del:{}, cash:{}, shift:{}});
 let doc = blank();
@@ -429,10 +435,12 @@ function setShift(k, p, on){
 }
 
 /* ═════════ 同期 ═════════ */
-let client = null, lastSent = "", pushT = null;
+let clients = [], lastSent = "", pushT = null;
 
-function setDot(ok){
-  const d = document.getElementById("dot");
+const linked = () => clients.some(c => c && c.connected);
+
+function setDot(){
+  const ok = linked(), d = document.getElementById("dot");
   d.classList.toggle("off", !ok);
   d.title = ok ? "4人で同期中" : "同期していません（この端末には保存されています）";
 }
@@ -440,41 +448,44 @@ function setDot(ok){
 function push(){
   clearTimeout(pushT);
   pushT = setTimeout(() => {
-    if(!client || !client.connected) return;
+    if(!linked()) return;
     const s = canon(doc);
     if(s === lastSent) return;
     lastSent = s;
-    client.publish(TOPIC, JSON.stringify({src:ME, doc}), {qos:1, retain:true});
-  }, 300);
+    const msg = JSON.stringify({src:ME, doc});
+    clients.forEach(c => { if(c && c.connected) try{
+      c.publish(TOPIC, msg, {qos:0, retain:true});
+    }catch(e){} });
+  }, 350);
+}
+
+function onRemote(payload){
+  let r; try{ r = JSON.parse(payload.toString()) }catch(e){ return }
+  if(!r || !r.doc || r.src === ME) return;
+  doc = merge(doc, r.doc);
+  save(); renderAll();
+  const mine = canon(doc);
+  if(mine === canon(r.doc)) lastSent = mine;  /* 同じ内容 → 送り返さない */
+  else push();                                 /* こちらが多い → 返す */
 }
 
 function connect(){
-  if(!window.mqtt){ setDot(false); return; }
-  client = mqtt.connect("wss://broker.emqx.io:8084/mqtt", {
-    clientId: "pg239_" + ME,
-    connectTimeout: 8000,
-    reconnectPeriod: 5000,
-    keepalive: 30,
-    clean: true
-  });
-  client.on("connect", () => {
-    setDot(true);
-    client.subscribe(TOPIC, {qos:1});
-    lastSent = "";
-    push();
-  });
-  ["reconnect","close","offline","error"].forEach(ev =>
-    client.on(ev, () => setDot(false)));
-
-  client.on("message", (t, payload) => {
-    let r; try{ r = JSON.parse(payload.toString()) }catch(e){ return }
-    if(!r || !r.doc || r.src === ME) return;
-    doc = merge(doc, r.doc);
-    save(); renderAll();
-    const mine = canon(doc);
-    if(mine === canon(r.doc)) lastSent = mine;   /* 同じ内容 → 送り返さない */
-    else push();                                  /* こちらが多い → 返す */
-  });
+  if(!window.mqtt){ setDot(); return; }
+  clients = BROKERS.map(url => {
+    let c;
+    try{
+      c = mqtt.connect(url, {
+        clientId: "pg239_" + ME + "_" + Math.random().toString(16).slice(2,6),
+        connectTimeout: 8000, reconnectPeriod: 8000, keepalive: 30, clean: true
+      });
+    }catch(e){ return null }
+    c.on("connect", () => { c.subscribe(TOPIC, {qos:0}); lastSent = ""; setDot(); push(); });
+    c.on("message", (t, p) => onRemote(p));
+    ["reconnect","close","offline","error"].forEach(ev => c.on(ev, setDot));
+    return c;
+  }).filter(Boolean);
+  setInterval(setDot, 4000);
+  setDot();
 }
 
 /* ═════════ トースト ═════════ */
@@ -737,6 +748,6 @@ function wire(){
 load();
 buildPeople(); buildPad(); buildFloat(); buildShift();
 wireTabs(); wire(); renderAmt(); renderWho(); renderAll();
-setDot(false);
+setDot();
 connect();
 </script>
