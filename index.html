@@ -1,0 +1,696 @@
+<meta charset="utf-8">
+<title>PLASTIC GIRLS 239</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&family=M+PLUS+2:wght@400;500;700&display=swap">
+<meta name="theme-color" content="#BBDCEA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#091A20" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PLASTIC GIRLS">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232C6B51'/%3E%3Cpath d='M8 12h16M8 20h16M13 8v16M19 8v16' stroke='%23BBDCEA' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<style>
+/* ───────── tokens ───────── */
+:root{
+  --blob-a:#A8D3E6; --blob-b:#79B39C; --blob-c:#CFE4EE; --blob-d:#6FA8C6;
+  --ground:#BBDCEA;
+
+  --glass:rgba(255,255,255,.52);
+  --glass-2:rgba(255,255,255,.32);
+  --glass-3:rgba(255,255,255,.18);
+  --glass-line:rgba(255,255,255,.82);
+  --glass-line-soft:rgba(255,255,255,.44);
+  --glass-shadow:0 10px 34px -12px rgba(14,46,58,.42), 0 2px 8px -4px rgba(14,46,58,.26);
+  --inner-lit:inset 0 1px 0 rgba(255,255,255,.85), inset 0 -1px 0 rgba(255,255,255,.20);
+
+  --text:#0E1A1F;
+  --text-dim:rgba(14,26,31,.56);
+  --text-faint:rgba(14,26,31,.30);
+  --hair:rgba(14,26,31,.11);
+
+  --accent:#2C6B51; --accent-soft:rgba(44,107,81,.16);
+  --warn:#B4541F;
+
+  --p-kouki:#2C6B51; --p-aguri:#2E6E92; --p-akari:#A9591F; --p-kento:#6C4483;
+  --on-p:#FFFFFF; --ring:rgba(255,255,255,.9);
+
+  --f-num:"Schibsted Grotesk","M PLUS 2",system-ui,sans-serif;
+  --f-ui:"M PLUS 2","Schibsted Grotesk",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --blob-a:#123A3A; --blob-b:#1E4F42; --blob-c:#0E2A38; --blob-d:#1F5068;
+  --ground:#091A20;
+  --glass:rgba(255,255,255,.085);
+  --glass-2:rgba(255,255,255,.055);
+  --glass-3:rgba(255,255,255,.03);
+  --glass-line:rgba(255,255,255,.20);
+  --glass-line-soft:rgba(255,255,255,.10);
+  --glass-shadow:0 16px 40px -16px rgba(0,0,0,.72), 0 2px 10px -6px rgba(0,0,0,.55);
+  --inner-lit:inset 0 1px 0 rgba(255,255,255,.15), inset 0 -1px 0 rgba(255,255,255,.04);
+  --text:#E9F2EF;
+  --text-dim:rgba(233,242,239,.60);
+  --text-faint:rgba(233,242,239,.32);
+  --hair:rgba(233,242,239,.13);
+  --accent:#79D2A6; --accent-soft:rgba(121,210,166,.18);
+  --warn:#F0A272;
+  --p-kouki:#6FCE9E; --p-aguri:#74BEE8; --p-akari:#E9A366; --p-kento:#C296D8;
+  --on-p:#08191F; --ring:rgba(255,255,255,.5);
+}}
+:root[data-theme="dark"]{
+  --blob-a:#123A3A; --blob-b:#1E4F42; --blob-c:#0E2A38; --blob-d:#1F5068;
+  --ground:#091A20;
+  --glass:rgba(255,255,255,.085);
+  --glass-2:rgba(255,255,255,.055);
+  --glass-3:rgba(255,255,255,.03);
+  --glass-line:rgba(255,255,255,.20);
+  --glass-line-soft:rgba(255,255,255,.10);
+  --glass-shadow:0 16px 40px -16px rgba(0,0,0,.72), 0 2px 10px -6px rgba(0,0,0,.55);
+  --inner-lit:inset 0 1px 0 rgba(255,255,255,.15), inset 0 -1px 0 rgba(255,255,255,.04);
+  --text:#E9F2EF;
+  --text-dim:rgba(233,242,239,.60);
+  --text-faint:rgba(233,242,239,.32);
+  --hair:rgba(233,242,239,.13);
+  --accent:#79D2A6; --accent-soft:rgba(121,210,166,.18);
+  --warn:#F0A272;
+  --p-kouki:#6FCE9E; --p-aguri:#74BEE8; --p-akari:#E9A366; --p-kento:#C296D8;
+  --on-p:#08191F; --ring:rgba(255,255,255,.5);
+}
+
+/* ───────── base ───────── */
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--text);
+  font-family:var(--f-ui); font-size:16px; line-height:1.5;
+  font-feature-settings:"palt" 1;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  padding-bottom:calc(100px + env(safe-area-inset-bottom));
+}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+#bg{position:fixed;inset:-20%;z-index:-1;filter:blur(58px) saturate(115%);pointer-events:none}
+#bg i{position:absolute;display:block;border-radius:50%;opacity:.92;
+  animation:drift 28s ease-in-out infinite alternate}
+#bg i:nth-child(1){width:62vmax;height:62vmax;left:-10%;top:-8%;background:var(--blob-a);animation-duration:31s}
+#bg i:nth-child(2){width:54vmax;height:54vmax;right:-14%;top:6%;background:var(--blob-b);animation-duration:24s;animation-delay:-6s}
+#bg i:nth-child(3){width:66vmax;height:66vmax;left:-6%;bottom:-18%;background:var(--blob-c);animation-duration:37s;animation-delay:-12s}
+#bg i:nth-child(4){width:46vmax;height:46vmax;right:-6%;bottom:-8%;background:var(--blob-d);animation-duration:28s;animation-delay:-3s}
+@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(6%,-7%,0) scale(1.16)}}
+@media (prefers-reduced-motion:reduce){#bg i{animation:none}}
+
+.g{background:var(--glass);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);
+  border:1px solid var(--glass-line-soft);
+  box-shadow:var(--glass-shadow),var(--inner-lit);border-radius:26px}
+.g-thin{background:var(--glass-2);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid var(--glass-line-soft);border-radius:18px}
+
+.wrap{max-width:540px;margin:0 auto;padding:0 16px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.hidden{display:none!important}
+
+/* ───────── header ───────── */
+header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
+  background:linear-gradient(to bottom,var(--ground) 20%,transparent)}
+.head{display:flex;align-items:center;gap:10px;padding:0 6px}
+.head h1{font-family:var(--f-num);font-weight:900;font-size:17px;letter-spacing:-.025em;margin:0}
+.dot{margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 0 var(--accent-soft);animation:pulse 3s ease-out infinite}
+.dot.off{background:var(--warn);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 var(--accent-soft)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+
+/* ───────── segmented ───────── */
+.seg{position:relative;display:flex;padding:4px;border-radius:17px;gap:2px;margin-top:12px}
+.seg button{flex:1;position:relative;z-index:2;padding:9px 4px;border-radius:13px;font-size:13.5px;
+  font-weight:500;color:var(--text-dim);transition:color .28s}
+.seg button[aria-selected="true"]{color:var(--text);font-weight:700}
+.seg .lens{position:absolute;z-index:1;left:0;top:4px;bottom:4px;border-radius:13px;
+  background:var(--glass-line);box-shadow:0 2px 10px -4px rgba(0,0,0,.28);
+  transition:transform .44s cubic-bezier(.22,1.2,.36,1),width .44s cubic-bezier(.22,1.2,.36,1)}
+@media (prefers-reduced-motion:reduce){.seg .lens{transition:none}}
+
+/* ───────── total ───────── */
+.tot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:20px 22px 18px}
+.tot .v{font-family:var(--f-num);font-weight:900;font-size:clamp(42px,13vw,60px);
+  letter-spacing:-.045em;line-height:.92;display:flex;align-items:baseline;gap:2px;
+  font-variant-numeric:tabular-nums}
+.tot .v i{font-style:normal;font-size:.44em;font-weight:700;color:var(--text-dim);margin-right:6px}
+.tot .n{font-family:var(--f-num);font-size:14px;font-weight:500;color:var(--text-dim);
+  padding-bottom:6px;white-space:nowrap}
+
+/* ───────── people ───────── */
+.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:14px 10px 12px}
+.people button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:4px 0;
+  border-radius:18px;transition:transform .16s}
+.people button:active{transform:scale(.95)}
+.av{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:var(--pc);color:var(--on-p);font-weight:700;font-size:13px;letter-spacing:.01em;
+  transition:transform .3s cubic-bezier(.2,1.5,.4,1),box-shadow .3s}
+.people button[aria-pressed="true"] .av{transform:scale(1.08);
+  box-shadow:0 9px 22px -8px var(--pc),0 0 0 3.5px var(--ring)}
+.people .s{font-family:var(--f-num);font-size:13px;font-weight:500;color:var(--text-dim);
+  font-variant-numeric:tabular-nums}
+.people button[aria-pressed="true"] .s{color:var(--text);font-weight:700}
+
+/* ───────── amount + pad ───────── */
+.amt{padding:20px;text-align:center;font-family:var(--f-num);font-weight:900;
+  font-size:clamp(48px,16vw,70px);letter-spacing:-.05em;line-height:1;
+  font-variant-numeric:tabular-nums}
+.amt i{font-style:normal;font-size:.4em;font-weight:700;color:var(--text-dim);margin-right:6px;
+  vertical-align:baseline}
+.amt .z{color:var(--text-faint)}
+
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:9px}
+.pad button{height:60px;border-radius:18px;background:var(--glass-2);
+  border:1px solid var(--glass-line-soft);box-shadow:var(--inner-lit);
+  font-family:var(--f-num);font-weight:700;font-size:25px;letter-spacing:-.02em;
+  transition:transform .12s,background .2s}
+.pad button:active{transform:scale(.94);background:var(--glass-line)}
+.pad button.u{font-size:18px;font-weight:500;color:var(--text-dim)}
+
+.go{width:100%;height:58px;border-radius:20px;background:var(--pc,var(--accent));color:var(--on-p);
+  font-weight:700;font-size:17px;letter-spacing:.04em;
+  box-shadow:0 10px 26px -10px var(--pc,var(--accent));
+  transition:transform .16s,opacity .25s,background .3s,box-shadow .3s}
+.go:active{transform:scale(.975)}
+.go[disabled]{background:var(--glass-2);color:var(--text-faint);box-shadow:none;
+  border:1px solid var(--glass-line-soft);cursor:not-allowed}
+
+/* ───────── rows ───────── */
+.rows{padding:5px}
+.row{display:flex;align-items:center;gap:11px;padding:11px 12px}
+.row+.row{box-shadow:0 -1px 0 var(--hair)}
+.row .d{width:9px;height:9px;border-radius:50%;background:var(--pc);flex:none}
+.row .m{flex:1;min-width:0;font-size:14px;font-weight:500}
+.row .m em{display:block;font-style:normal;font-family:var(--f-num);font-size:11px;
+  color:var(--text-faint);font-weight:400}
+.row .v{font-family:var(--f-num);font-size:15.5px;font-weight:500;font-variant-numeric:tabular-nums}
+.row .x{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;
+  color:var(--text-faint);font-size:14px;transition:background .2s,color .2s}
+.row .x:hover,.row .x:focus-visible{background:var(--accent-soft);color:var(--text)}
+.none{padding:30px 16px;text-align:center;color:var(--text-faint);font-size:13.5px}
+@keyframes pop{from{opacity:0;transform:translateY(-9px)}to{opacity:1;transform:none}}
+.row.new{animation:pop .36s cubic-bezier(.22,1.2,.36,1)}
+@media (prefers-reduced-motion:reduce){.row.new{animation:none}}
+
+/* ───────── float ───────── */
+.f{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.f+.f{box-shadow:0 -1px 0 var(--hair)}
+.f .d{width:9px;height:9px;border-radius:50%;background:var(--pc);flex:none}
+.f .n{flex:1;font-size:14.5px;font-weight:500}
+.f button{width:34px;height:34px;border-radius:12px;background:var(--glass-2);
+  border:1px solid var(--glass-line-soft);font-family:var(--f-num);font-size:17px;font-weight:500;
+  display:grid;place-items:center;transition:transform .13s}
+.f button:active{transform:scale(.9)}
+.f input{width:88px;text-align:right;background:var(--glass-3);border:1px solid var(--glass-line-soft);
+  border-radius:12px;padding:8px 10px;font-family:var(--f-num);font-size:15px;font-weight:500;
+  font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.f input::-webkit-outer-spin-button,.f input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+/* ───────── table ───────── */
+.tw{overflow-x:auto;padding:6px 8px}
+table{width:100%;border-collapse:collapse;font-family:var(--f-num);font-size:13.5px;
+  font-variant-numeric:tabular-nums}
+th{text-align:right;font-weight:500;color:var(--text-dim);font-size:11px;padding:8px;white-space:nowrap}
+th:first-child{text-align:left}
+td{padding:11px 8px;text-align:right;white-space:nowrap;box-shadow:0 -1px 0 var(--hair)}
+td:first-child{text-align:left;font-family:var(--f-ui);font-size:14px;font-weight:500}
+tr.sum td{font-weight:700}
+.dt{display:inline-flex;align-items:center;gap:7px}
+.dt::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--pc)}
+.copy{width:100%;height:50px;border-radius:18px;background:var(--glass-2);
+  border:1px solid var(--glass-line-soft);box-shadow:var(--inner-lit);font-size:14px;font-weight:500;
+  transition:transform .16s}
+.copy:active{transform:scale(.98)}
+
+/* ───────── shift ───────── */
+.hrs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:14px 12px}
+.hrs div{display:flex;flex-direction:column;align-items:center;gap:5px}
+.hrs .av{width:40px;height:40px;font-size:10.5px;opacity:1}
+.hrs .h{font-family:var(--f-num);font-size:13px;font-weight:500;color:var(--text-dim);
+  font-variant-numeric:tabular-nums}
+
+.day{padding:16px 14px 12px}
+.day h2{font-family:var(--f-num);font-weight:900;font-size:21px;letter-spacing:-.03em;
+  margin:0 0 12px;padding-left:2px;display:flex;align-items:baseline;gap:9px}
+.day h2 em{font-style:normal;font-size:11px;font-weight:500;letter-spacing:.12em;color:var(--text-dim)}
+.grid{display:grid;grid-template-columns:52px repeat(4,1fr);gap:5px;align-items:center}
+.grid .hd{display:grid;place-items:center;padding-bottom:3px}
+.grid .hd .av{width:34px;height:34px;font-size:9.5px;opacity:1}
+.grid .t{font-family:var(--f-num);font-size:12px;font-weight:500;color:var(--text-dim);
+  font-variant-numeric:tabular-nums;text-align:right;padding-right:4px;white-space:nowrap}
+.cell{height:38px;border-radius:12px;background:var(--glass-3);border:0;
+  transition:transform .16s cubic-bezier(.2,1.4,.4,1),background .22s,box-shadow .22s}
+.cell{background:color-mix(in srgb,var(--pc) 12%,transparent)}
+.cell:active{transform:scale(.9)}
+.cell[aria-pressed="true"]{background:var(--pc);box-shadow:0 5px 14px -7px var(--pc)}
+
+/* ───────── nav ───────── */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;
+  padding:0 16px calc(14px + env(safe-area-inset-bottom));pointer-events:none}
+.tabs{pointer-events:auto;position:relative;display:flex;gap:4px;padding:5px;border-radius:24px;
+  width:100%;max-width:320px;background:var(--glass);
+  -webkit-backdrop-filter:blur(34px) saturate(190%);backdrop-filter:blur(34px) saturate(190%);
+  border:1px solid var(--glass-line-soft);
+  box-shadow:0 18px 44px -14px rgba(10,40,50,.5),var(--inner-lit)}
+.tabs button{flex:1;position:relative;z-index:2;height:48px;border-radius:19px;
+  display:grid;place-items:center;color:var(--text-dim);font-size:14px;font-weight:500;
+  transition:color .3s}
+.tabs button[aria-selected="true"]{color:var(--text);font-weight:700}
+.tabs .lens{position:absolute;z-index:1;left:0;top:5px;bottom:5px;border-radius:19px;
+  background:var(--glass-line);box-shadow:0 3px 12px -5px rgba(0,0,0,.32);
+  transition:transform .46s cubic-bezier(.24,1.25,.34,1)}
+@media (prefers-reduced-motion:reduce){.tabs .lens{transition:none}}
+
+#toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));z-index:60;
+  transform:translate(-50%,14px);opacity:0;pointer-events:none;
+  padding:11px 20px;border-radius:99px;font-size:13.5px;font-weight:500;white-space:nowrap;
+  background:var(--glass);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--glass-line-soft);
+  box-shadow:var(--glass-shadow);transition:opacity .3s,transform .3s cubic-bezier(.22,1.2,.36,1)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+
+<div id="bg"><i></i><i></i><i></i><i></i></div>
+
+<header><div class="wrap"><div class="head">
+  <h1>PLASTIC GIRLS</h1><i class="dot" id="dot" title="同期"></i>
+</div></div></header>
+
+<main class="wrap">
+  <section id="v-money">
+    <div class="seg g-thin" id="seg" role="tablist">
+      <div class="lens"></div>
+      <button role="tab" aria-selected="true" data-sub="sales">売上</button>
+      <button role="tab" aria-selected="false" data-sub="float">持ち込み</button>
+      <button role="tab" aria-selected="false" data-sub="sum">集計</button>
+    </div>
+
+    <div id="sub-sales" class="stack" style="margin-top:12px">
+      <div class="tot g">
+        <div class="v"><i>¥</i><span id="tSales">0</span></div>
+        <div class="n" id="tCount">0点</div>
+      </div>
+      <div class="people g" id="people"></div>
+      <div class="amt g" id="amt"></div>
+      <div class="pad g" id="pad"></div>
+      <button class="go" id="go" disabled>記録</button>
+      <div class="rows g" id="recent"></div>
+    </div>
+
+    <div id="sub-float" class="stack hidden" style="margin-top:12px">
+      <div class="tot g"><div class="v"><i>¥</i><span id="tFloat">0</span></div>
+        <div class="n">持ち込み</div></div>
+      <div class="g" id="floatRows" style="padding:4px"></div>
+    </div>
+
+    <div id="sub-sum" class="stack hidden" style="margin-top:12px">
+      <div class="tot g"><div class="v"><i>¥</i><span id="tBox">0</span></div>
+        <div class="n">レジの現金</div></div>
+      <div class="tw g"><table>
+        <thead><tr><th></th><th>点</th><th>売上</th><th>持ち込み</th><th>返す額</th></tr></thead>
+        <tbody id="sumBody"></tbody>
+      </table></div>
+      <button class="copy" id="copyBtn">集計をコピー</button>
+    </div>
+  </section>
+
+  <section id="v-shift" class="stack hidden" style="margin-top:12px">
+    <div class="hrs g" id="hrs"></div>
+    <div id="days" class="stack"></div>
+  </section>
+</main>
+
+<nav><div class="tabs" id="tabs" role="tablist">
+  <div class="lens"></div>
+  <button role="tab" aria-selected="true" data-view="money">お金</button>
+  <button role="tab" aria-selected="false" data-view="shift">シフト</button>
+</div></nav>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+
+const PEOPLE = [
+  {id:"kouki", name:"コウキ"},
+  {id:"aguri", name:"アグリ"},
+  {id:"akari", name:"アカリ"},
+  {id:"kento", name:"ケント"}
+];
+const P = Object.fromEntries(PEOPLE.map(p=>[p.id,p]));
+const PC = id => `var(--p-${id})`;
+
+const DAYS = [
+  {id:"2026-09-05", label:"9/5", dow:"SAT",
+   slots:[["09:00","10:00"],["10:00","11:00"],["11:00","12:00"],["12:00","13:00"],
+          ["13:00","14:00"],["14:00","15:00"],["15:00","16:00"],["16:00","17:00"]]},
+  {id:"2026-09-06", label:"9/6", dow:"SUN",
+   slots:[["09:00","10:00"],["10:00","11:00"],["11:00","12:00"],["12:00","13:00"],
+          ["13:00","14:00"],["14:00","15:00"],["15:00","16:00"],["16:00","16:30"]]}
+];
+const key = (d,s) => d.id.replace(/-/g,"") + "_" + s[0].replace(":","");
+const mins = t => (+t.slice(0,2))*60 + (+t.slice(3));
+const dur = s => (mins(s[1]) - mins(s[0])) / 60;
+const short = t => t.replace(/^0/,"").replace(/:00$/,"");
+const yen = n => n.toLocaleString("ja-JP");
+
+/* ───────── storage ───────── */
+let store = null;
+
+function localStore(){
+  const rd = k => { try{ return JSON.parse(localStorage.getItem("pg239_"+k)) }catch(e){ return null } };
+  const wr = (k,v) => { try{ localStorage.setItem("pg239_"+k, JSON.stringify(v)) }catch(e){} };
+  const subs = {sales:[],cash:[],shift:[]};
+  const fire = k => subs[k].forEach(fn => fn(rd(k) || (k === "sales" ? [] : {})));
+  return {
+    onSales(cb){ subs.sales.push(cb); cb(rd("sales")||[]) },
+    onCash(cb){ subs.cash.push(cb); cb(rd("cash")||{}) },
+    onShift(cb){ subs.shift.push(cb); cb(rd("shift")||{}) },
+    async addSale(s){ const a = rd("sales")||[], id = "l"+Date.now()+Math.random().toString(36).slice(2,6);
+      a.unshift(Object.assign({id}, s)); wr("sales",a); fire("sales"); return {id} },
+    async delSale(id){ wr("sales",(rd("sales")||[]).filter(x=>x.id!==id)); fire("sales") },
+    async setCash(p,v){ const c = rd("cash")||{}; c[p]=v; wr("cash",c); fire("cash") },
+    async setShift(k,p,on){ const s = rd("shift")||{}; s[k]=s[k]||{}; s[k][p]=on; wr("shift",s); fire("shift") }
+  };
+}
+
+function dbStore(db){
+  const merge = async (ref, patch) => {
+    try{ await ref.update(patch); }
+    catch(e){
+      if(e && (e.code === "invalid_argument" || e.code === "transform_error")){
+        const snap = await ref.get();
+        await ref.set(Object.assign({}, snap.exists ? snap.data() : {}, patch));
+      } else throw e;
+    }
+  };
+  return {
+    onSales(cb){ db.collection("sales").orderBy("ts","desc").limit(600)
+      .onSnapshot(s => cb(s.docs.map(d => Object.assign({id:d.id}, d.data()))), flag) },
+    onCash(cb){ db.doc("cash/float").onSnapshot(d => cb(d.exists ? d.data() : {}), flag) },
+    onShift(cb){ db.collection("shift").onSnapshot(s => {
+      const o = {}; s.docs.forEach(d => o[d.id] = d.data() || {}); cb(o); }, flag) },
+    addSale(s){ return db.collection("sales").add(s) },
+    delSale(id){ return db.doc("sales/"+id).delete() },
+    setCash(p,v){ return merge(db.doc("cash/float"), {[p]:v}) },
+    setShift(k,p,on){ return merge(db.doc("shift/"+k), {[p]:on}) }
+  };
+}
+function flag(e){
+  console.warn("db", e);
+  if(e && (e.code === "revoked" || e.code === "unavailable")) setSync(false);
+}
+function setSync(ok){ document.getElementById("dot").classList.toggle("off", !ok); }
+
+const S = { sales:[], cash:{}, shift:{}, who:null, digits:"", last:null };
+
+let tT;
+function toast(m){
+  const el = document.getElementById("toast");
+  el.textContent = m; el.classList.add("on");
+  clearTimeout(tT); tT = setTimeout(()=>el.classList.remove("on"), 2000);
+}
+
+/* ───────── build ───────── */
+const avatar = (p, cls) =>
+  `<span class="av ${cls||""}" style="--pc:${PC(p.id)}">${p.name}</span>`;
+
+function buildPeople(){
+  const el = document.getElementById("people");
+  el.innerHTML = PEOPLE.map(p =>
+    `<button data-p="${p.id}" aria-pressed="false" aria-label="${p.name}">
+       ${avatar(p)}<span class="s" data-s="${p.id}">¥0</span>
+     </button>`).join("");
+  el.addEventListener("click", e => {
+    const b = e.target.closest("button[data-p]"); if(!b) return;
+    S.who = S.who === b.dataset.p ? null : b.dataset.p;
+    renderWho();
+  });
+}
+function renderWho(){
+  document.querySelectorAll("#people button").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.p === S.who)));
+  const go = document.getElementById("go");
+  go.style.setProperty("--pc", S.who ? PC(S.who) : "");
+  go.textContent = S.who ? P[S.who].name : "記録";
+  syncGo();
+}
+
+function buildPad(){
+  const el = document.getElementById("pad");
+  el.innerHTML = ["1","2","3","4","5","6","7","8","9","C","0","⌫"]
+    .map(k => `<button data-k="${k}" class="${/\d/.test(k)?"":"u"}">${k}</button>`).join("");
+  el.addEventListener("click", e => {
+    const b = e.target.closest("button"); if(!b) return;
+    tap(b.dataset.k);
+  });
+}
+function tap(k){
+  if(k === "C") S.digits = "";
+  else if(k === "⌫") S.digits = S.digits.slice(0,-1);
+  else if(S.digits.length < 5) S.digits = (S.digits === "0" ? "" : S.digits) + k;
+  renderAmt();
+}
+const value = () => S.digits ? parseInt(S.digits,10) * 100 : 0;
+
+function renderAmt(){
+  const el = document.getElementById("amt");
+  if(!S.digits){ el.innerHTML = `<i>¥</i><span class="z">0</span>`; }
+  else{
+    const f = yen(value());
+    el.innerHTML = `<i>¥</i>${f.slice(0,-2)}<span class="z">${f.slice(-2)}</span>`;
+  }
+  syncGo();
+}
+function syncGo(){ document.getElementById("go").disabled = !(S.who && value() > 0); }
+
+function buildFloat(){
+  const el = document.getElementById("floatRows");
+  el.innerHTML = PEOPLE.map(p => `
+    <div class="f" style="--pc:${PC(p.id)}">
+      <span class="d"></span><span class="n">${p.name}</span>
+      <button data-p="${p.id}" data-d="-1000" aria-label="${p.name} −1000">−</button>
+      <input type="number" step="100" min="0" inputmode="numeric" data-p="${p.id}" value="0" aria-label="${p.name}">
+      <button data-p="${p.id}" data-d="1000" aria-label="${p.name} +1000">＋</button>
+    </div>`).join("");
+  el.addEventListener("click", e => {
+    const b = e.target.closest("button[data-d]"); if(!b) return;
+    const v = Math.max(0, Math.round(((+(S.cash[b.dataset.p]||0)) + (+b.dataset.d))/100)*100);
+    store.setCash(b.dataset.p, v);
+  });
+  el.addEventListener("change", e => {
+    const i = e.target.closest("input[data-p]"); if(!i) return;
+    store.setCash(i.dataset.p, Math.max(0, Math.round((+i.value||0)/100)*100));
+  });
+}
+
+function buildShift(){
+  document.getElementById("hrs").innerHTML = PEOPLE.map(p =>
+    `<div>${avatar(p)}<span class="h" data-h="${p.id}">0h</span></div>`).join("");
+
+  document.getElementById("days").innerHTML = DAYS.map(d => `
+    <div class="day g">
+      <h2>${d.label}<em>${d.dow}</em></h2>
+      <div class="grid">
+        <span></span>${PEOPLE.map(p => `<span class="hd">${avatar(p)}</span>`).join("")}
+        ${d.slots.map(s => `<span class="t">${short(s[0])}–${short(s[1])}</span>` +
+          PEOPLE.map(p => `<button class="cell" style="--pc:${PC(p.id)}" data-k="${key(d,s)}"
+            data-p="${p.id}" aria-pressed="false"
+            aria-label="${d.label} ${s[0]} ${p.name}"></button>`).join("")).join("")}
+      </div>
+    </div>`).join("");
+
+  document.getElementById("days").addEventListener("click", e => {
+    const c = e.target.closest(".cell"); if(!c) return;
+    const on = c.getAttribute("aria-pressed") !== "true";
+    c.setAttribute("aria-pressed", String(on));
+    store.setShift(c.dataset.k, c.dataset.p, on);
+  });
+}
+
+/* ───────── render ───────── */
+function renderSales(){
+  const per = {}; PEOPLE.forEach(p => per[p.id] = {n:0, sum:0});
+  let total = 0;
+  S.sales.forEach(s => { const b = per[s.person]; if(!b) return;
+    b.n++; b.sum += +s.amount||0; total += +s.amount||0; });
+
+  document.getElementById("tSales").textContent = yen(total);
+  document.getElementById("tCount").textContent = S.sales.length + "点";
+  PEOPLE.forEach(p => {
+    const el = document.querySelector(`[data-s="${p.id}"]`);
+    if(el) el.textContent = "¥" + yen(per[p.id].sum);
+  });
+
+  const list = S.sales.slice(0,12);
+  document.getElementById("recent").innerHTML = list.length ? list.map(s => {
+    const p = P[s.person] || {name:"?"};
+    const t = new Date(s.ts || 0);
+    const time = isNaN(t) || !s.ts ? "" :
+      `${t.getMonth()+1}/${t.getDate()} ${String(t.getHours()).padStart(2,"0")}:${String(t.getMinutes()).padStart(2,"0")}`;
+    return `<div class="row${s.id === S.last ? " new" : ""}" style="--pc:${PC(s.person)}">
+      <span class="d"></span>
+      <span class="m">${p.name}<em>${time}</em></span>
+      <span class="v">¥${yen(+s.amount||0)}</span>
+      <button class="x" data-id="${s.id}" aria-label="取り消す">✕</button>
+    </div>`;
+  }).join("") : `<div class="none">まだ記録なし</div>`;
+
+  renderSum(per, total);
+}
+
+function renderCash(){
+  let sum = 0;
+  PEOPLE.forEach(p => {
+    const v = +(S.cash[p.id]||0); sum += v;
+    const i = document.querySelector(`#floatRows input[data-p="${p.id}"]`);
+    if(i && document.activeElement !== i) i.value = v;
+  });
+  document.getElementById("tFloat").textContent = yen(sum);
+  renderSales();
+}
+
+function renderSum(per, total){
+  let fl = 0; PEOPLE.forEach(p => fl += +(S.cash[p.id]||0));
+  document.getElementById("tBox").textContent = yen(fl + total);
+  document.getElementById("sumBody").innerHTML = PEOPLE.map(p => {
+    const c = +(S.cash[p.id]||0);
+    return `<tr><td><span class="dt" style="--pc:${PC(p.id)}">${p.name}</span></td>
+      <td>${per[p.id].n}</td><td>¥${yen(per[p.id].sum)}</td>
+      <td>¥${yen(c)}</td><td>¥${yen(per[p.id].sum + c)}</td></tr>`;
+  }).join("") +
+  `<tr class="sum"><td>合計</td><td>${S.sales.length}</td><td>¥${yen(total)}</td>
+     <td>¥${yen(fl)}</td><td>¥${yen(total+fl)}</td></tr>`;
+}
+
+function renderShift(){
+  const h = {}; PEOPLE.forEach(p => h[p.id] = 0);
+  DAYS.forEach(d => d.slots.forEach(s => {
+    const rec = S.shift[key(d,s)] || {};
+    PEOPLE.forEach(p => {
+      const on = !!rec[p.id];
+      if(on) h[p.id] += dur(s);
+      const c = document.querySelector(`.cell[data-k="${key(d,s)}"][data-p="${p.id}"]`);
+      if(c) c.setAttribute("aria-pressed", String(on));
+    });
+  }));
+  PEOPLE.forEach(p => {
+    const el = document.querySelector(`[data-h="${p.id}"]`);
+    if(el) el.textContent = h[p.id] + "h";
+  });
+}
+
+/* ───────── lens / tabs ───────── */
+function lens(box, btns){
+  const l = box.querySelector(".lens");
+  const move = () => {
+    const on = btns.find(b => b.getAttribute("aria-selected") === "true") || btns[0];
+    const br = on.getBoundingClientRect(), cr = box.getBoundingClientRect();
+    if(!br.width) return;
+    const bw = parseFloat(getComputedStyle(box).borderLeftWidth) || 0;
+    l.style.width = br.width + "px";
+    l.style.transform = `translateX(${br.left - cr.left - bw}px)`;
+  };
+  requestAnimationFrame(move);
+  addEventListener("resize", move);
+  addEventListener("load", move);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(move);
+  if(window.ResizeObserver) new ResizeObserver(move).observe(box);
+  return move;
+}
+
+let segMove = () => {};
+function wireTabs(){
+  const tabs = document.getElementById("tabs");
+  const tb = [...tabs.querySelectorAll("button")];
+  const tMove = lens(tabs, tb);
+  tabs.addEventListener("click", e => {
+    const b = e.target.closest("button[data-view]"); if(!b) return;
+    tb.forEach(x => x.setAttribute("aria-selected", String(x === b)));
+    document.getElementById("v-money").classList.toggle("hidden", b.dataset.view !== "money");
+    document.getElementById("v-shift").classList.toggle("hidden", b.dataset.view !== "shift");
+    tMove(); scrollTo({top:0, behavior:"smooth"});
+    if(b.dataset.view === "shift") renderShift(); else requestAnimationFrame(segMove);
+  });
+
+  const seg = document.getElementById("seg");
+  const sb = [...seg.querySelectorAll("button")];
+  segMove = lens(seg, sb);
+  seg.addEventListener("click", e => {
+    const b = e.target.closest("button[data-sub]"); if(!b) return;
+    sb.forEach(x => x.setAttribute("aria-selected", String(x === b)));
+    ["sales","float","sum"].forEach(k =>
+      document.getElementById("sub-"+k).classList.toggle("hidden", k !== b.dataset.sub));
+    segMove();
+  });
+}
+
+/* ───────── actions ───────── */
+function wire(){
+  document.getElementById("go").addEventListener("click", async () => {
+    const amount = value(), person = S.who;
+    if(!person || !amount) return;
+    S.digits = ""; renderAmt();
+    try{
+      const ref = await store.addSale({person, amount, ts:Date.now()});
+      if(ref && ref.id) S.last = ref.id;
+      toast(`${P[person].name} ¥${yen(amount)}`);
+    }catch(err){
+      console.error(err);
+      toast(err && err.code === "quota_exceeded" ? "保存の上限です" : "保存できませんでした");
+    }
+  });
+
+  document.getElementById("recent").addEventListener("click", e => {
+    const b = e.target.closest(".x"); if(!b) return;
+    store.delSale(b.dataset.id).then(()=>toast("取り消しました")).catch(()=>toast("取り消せませんでした"));
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", () => {
+    const per = {}; PEOPLE.forEach(p => per[p.id] = {n:0, sum:0});
+    let total = 0, fl = 0;
+    S.sales.forEach(s => { const b = per[s.person]; if(b){ b.n++; b.sum += +s.amount||0; total += +s.amount||0; } });
+    PEOPLE.forEach(p => fl += +(S.cash[p.id]||0));
+    const txt = ["PLASTIC GIRLS 集計",
+      ...PEOPLE.map(p => `${p.name} ${per[p.id].n}点 売上¥${yen(per[p.id].sum)} 持込¥${yen(+(S.cash[p.id]||0))} 返す¥${yen(per[p.id].sum + (+(S.cash[p.id]||0)))}`),
+      `売上¥${yen(total)} / 持込¥${yen(fl)} / レジ¥${yen(total+fl)}`].join("\n");
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
+      .then(()=>toast("コピーしました")).catch(()=>toast("コピーできませんでした"));
+  });
+
+  addEventListener("keydown", e => {
+    if(document.getElementById("v-money").classList.contains("hidden")) return;
+    if(document.activeElement && document.activeElement.tagName === "INPUT") return;
+    if(/^\d$/.test(e.key)) tap(e.key);
+    else if(e.key === "Backspace") tap("⌫");
+    else if(e.key === "Escape") tap("C");
+    else if(e.key === "Enter") document.getElementById("go").click();
+  });
+}
+
+/* ───────── boot ───────── */
+function boot(s, ok){
+  store = s; setSync(ok);
+  store.onSales(v => { S.sales = v; renderSales() });
+  store.onCash(v => { S.cash = v || {}; renderCash() });
+  store.onShift(v => { S.shift = v || {}; renderShift() });
+}
+
+buildPeople(); buildPad(); buildFloat(); buildShift();
+wireTabs(); wire(); renderAmt(); renderWho();
+boot(localStore(), false);
+
+(async () => {
+  try{
+    const db = window.claude && claude.use ? await claude.use("db") : null;
+    if(db) boot(dbStore(db), true);
+  }catch(e){ console.warn(e) }
+})();
+</script>
