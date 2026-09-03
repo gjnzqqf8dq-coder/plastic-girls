@@ -34,6 +34,7 @@
   --warn:#B4541F;
 
   --p-kouki:#2C6B51; --p-aguri:#2E6E92; --p-akari:#A9591F; --p-kento:#6C4483;
+  --p-gacha:#436A78;
   --on-p:#FFFFFF; --ring:rgba(255,255,255,.9);
 
   --f-num:"Schibsted Grotesk","M PLUS 2",system-ui,sans-serif;
@@ -56,6 +57,7 @@
   --accent:#79D2A6; --accent-soft:rgba(121,210,166,.18);
   --warn:#F0A272;
   --p-kouki:#6FCE9E; --p-aguri:#74BEE8; --p-akari:#E9A366; --p-kento:#C296D8;
+  --p-gacha:#93BECD;
   --on-p:#08191F; --ring:rgba(255,255,255,.5);
 }}
 :root[data-theme="dark"]{
@@ -75,6 +77,7 @@
   --accent:#79D2A6; --accent-soft:rgba(121,210,166,.18);
   --warn:#F0A272;
   --p-kouki:#6FCE9E; --p-aguri:#74BEE8; --p-akari:#E9A366; --p-kento:#C296D8;
+  --p-gacha:#93BECD;
   --on-p:#08191F; --ring:rgba(255,255,255,.5);
 }
 
@@ -182,6 +185,22 @@ header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
 .go[disabled]{background:var(--glass-2);color:var(--text-faint);box-shadow:none;
   border:1px solid var(--glass-line-soft);cursor:not-allowed}
 
+/* ───────── ガチャ ───────── */
+.gacha{display:flex;align-items:center;gap:11px;padding:12px 14px 12px 18px;width:100%;
+  text-align:left;transition:transform .16s}
+.gacha:active{transform:scale(.985)}
+.gacha .gl{font-size:15px;font-weight:700}
+.gacha .gp,.gacha .gn{font-family:var(--f-num);font-size:13.5px;font-weight:500;color:var(--text-dim);
+  font-variant-numeric:tabular-nums}
+.gacha .gn{margin-left:auto}
+.gacha .gx{width:36px;height:36px;border-radius:50%;background:var(--p-gacha);color:var(--on-p);
+  display:grid;place-items:center;font-size:20px;font-weight:700;flex:none;
+  box-shadow:0 6px 16px -8px var(--p-gacha)}
+.gacha[disabled]{opacity:.45}
+.gacha[disabled] .gx{box-shadow:none}
+.gnote{padding:2px 10px 4px;font-family:var(--f-num);font-size:12.5px;color:var(--text-dim);
+  font-variant-numeric:tabular-nums;text-align:right}
+
 /* ───────── rows ───────── */
 .rows{padding:5px}
 .row{display:flex;align-items:center;gap:11px;padding:11px 12px}
@@ -212,6 +231,8 @@ header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
   border-radius:12px;padding:8px 10px;font-family:var(--f-num);font-size:15px;font-weight:500;
   font-variant-numeric:tabular-nums;-moz-appearance:textfield}
 .f input::-webkit-outer-spin-button,.f input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.f .u{width:18px;font-size:12.5px;color:var(--text-dim);flex:none}
+#gachaSet .f input{width:96px}
 
 /* ───────── table ───────── */
 .tw{overflow-x:auto;padding:6px 8px}
@@ -301,6 +322,10 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
       <div class="amt g" id="amt"></div>
       <div class="pad g" id="pad"></div>
       <button class="go" id="go" disabled>記録</button>
+      <button class="gacha g" id="gachaBtn">
+        <span class="gl">ガチャ</span><span class="gp" id="gPrice">¥0</span>
+        <span class="gn" id="gCount">0回</span><span class="gx">＋</span>
+      </button>
       <div class="rows g" id="recent"></div>
     </div>
 
@@ -308,15 +333,17 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
       <div class="tot g"><div class="v"><i>¥</i><span id="tFloat">0</span></div>
         <div class="n">持ち込み</div></div>
       <div class="g" id="floatRows" style="padding:4px"></div>
+      <div class="g" id="gachaSet" style="padding:4px"></div>
     </div>
 
     <div id="sub-sum" class="stack hidden" style="margin-top:12px">
       <div class="tot g"><div class="v"><i>¥</i><span id="tBox">0</span></div>
         <div class="n">レジの現金</div></div>
       <div class="tw g"><table>
-        <thead><tr><th></th><th>点</th><th>売上</th><th>持ち込み</th><th>返す額</th></tr></thead>
+        <thead><tr><th></th><th>点</th><th>売上</th><th>持ち込み</th></tr></thead>
         <tbody id="sumBody"></tbody>
-      </table></div>
+      </table>
+      <div class="gnote" id="gNote"></div></div>
       <button class="copy" id="copyBtn">集計をコピー</button>
     </div>
   </section>
@@ -346,7 +373,8 @@ const PEOPLE = [
   {id:"akari", name:"アカリ"},
   {id:"kento", name:"ケント"}
 ];
-const P  = Object.fromEntries(PEOPLE.map(p=>[p.id,p]));
+const GACHA = {id:"gacha", name:"ガチャ"};
+const P  = Object.fromEntries([...PEOPLE, GACHA].map(p=>[p.id,p]));
 const PC = id => `var(--p-${id})`;
 
 const DAYS = [
@@ -377,7 +405,7 @@ const BROKERS = [
   "wss://broker.hivemq.com:8884/mqtt"
 ];
 
-const blank = () => ({sales:{}, del:{}, cash:{}, shift:{}});
+const blank = () => ({sales:{}, del:{}, cash:{}, shift:{}, gacha:{}});
 let doc = blank();
 
 function load(){
@@ -404,6 +432,7 @@ function merge(a, b){
     sales: Object.assign({}, a.sales, b.sales),
     del:   Object.assign({}, a.del,   b.del),
     cash:  lww(a.cash, b.cash),
+    gacha: lww(a.gacha, b.gacha),
     shift: {}
   };
   new Set([...Object.keys(a.shift||{}), ...Object.keys(b.shift||{})])
@@ -418,6 +447,13 @@ const salesList = () => Object.keys(doc.sales)
   .sort((x,y) => (y.ts||0) - (x.ts||0));
 
 const cashOf  = id => +((doc.cash[id]||{}).v || 0);
+const gOf     = k  => +(((doc.gacha||{})[k]||{}).v || 0);
+const gStats  = () => {
+  const put = gOf("count"), cost = gOf("cost");
+  const sold = salesList().filter(s => s.person === "gacha").length;
+  const left = Math.max(0, put - sold);
+  return {put, cost, sold, left, unit: put ? cost / put : 0, leftYen: Math.round(put ? cost / put * left : 0)};
+};
 const shiftOf = (k,p) => !!(((doc.shift[k]||{})[p])||{}).v;
 
 /* 変更 */
@@ -429,6 +465,7 @@ function addSale(person, amount){
 }
 function delSale(id){ delete doc.sales[id]; doc.del[id] = Date.now(); commit(); }
 function setCash(p, v){ doc.cash[p] = {v, ts:Date.now()}; commit(); }
+function setG(k, v){ (doc.gacha = doc.gacha || {})[k] = {v, ts:Date.now()}; commit(); }
 function setShift(k, p, on){
   (doc.shift[k] = doc.shift[k] || {})[p] = {v:!!on, ts:Date.now()};
   commit();
@@ -522,8 +559,8 @@ function renderWho(){
 
 function buildPad(){
   const el = document.getElementById("pad");
-  el.innerHTML = ["1","2","3","4","5","6","7","8","9","C","0","⌫"]
-    .map(k => `<button data-k="${k}" class="${/\d/.test(k)?"":"u"}">${k}</button>`).join("");
+  el.innerHTML = ["1","2","3","4","5","6","7","8","9","00","0","⌫"]
+    .map(k => `<button data-k="${k}" class="${k==="⌫"?"u":""}">${k}</button>`).join("");
   el.addEventListener("click", e => {
     const b = e.target.closest("button"); if(b) tap(b.dataset.k);
   });
@@ -531,18 +568,14 @@ function buildPad(){
 function tap(k){
   if(k === "C") S.digits = "";
   else if(k === "⌫") S.digits = S.digits.slice(0,-1);
-  else if(S.digits.length < 5) S.digits = (S.digits === "0" ? "" : S.digits) + k;
+  else if(S.digits.length + k.length <= 7) S.digits = (S.digits === "0" ? "" : S.digits) + k;
   renderAmt();
 }
-const value = () => S.digits ? parseInt(S.digits,10) * 100 : 0;
+const value = () => S.digits ? parseInt(S.digits,10) : 0;
 
 function renderAmt(){
   const el = document.getElementById("amt");
-  if(!S.digits) el.innerHTML = `<i>¥</i><span class="z">0</span>`;
-  else{
-    const f = yen(value());
-    el.innerHTML = `<i>¥</i>${f.slice(0,-2)}<span class="z">${f.slice(-2)}</span>`;
-  }
+  el.innerHTML = S.digits ? `<i>¥</i>${yen(value())}` : `<i>¥</i><span class="z">0</span>`;
   syncGo();
 }
 function syncGo(){ document.getElementById("go").disabled = !(S.who && value() > 0); }
@@ -563,6 +596,33 @@ function buildFloat(){
   el.addEventListener("change", e => {
     const i = e.target.closest("input[data-p]"); if(!i) return;
     setCash(i.dataset.p, Math.max(0, Math.round((+i.value||0)/100)*100));
+  });
+}
+
+const G_FIELDS = [
+  {k:"price", label:"ガチャ 1回", step:100, unit:"円"},
+  {k:"count", label:"入れた個数",  step:1,   unit:"個"},
+  {k:"cost",  label:"入れた金額",  step:100, unit:"円"}
+];
+function buildGacha(){
+  const el = document.getElementById("gachaSet");
+  el.innerHTML = G_FIELDS.map(f => `
+    <div class="f" style="--pc:var(--p-gacha)">
+      <span class="d"></span><span class="n">${f.label}</span>
+      <input type="number" step="${f.step}" min="0" inputmode="numeric"
+             data-g="${f.k}" value="0" aria-label="ガチャ ${f.label}">
+      <span class="u">${f.unit}</span>
+    </div>`).join("");
+  el.addEventListener("change", e => {
+    const i = e.target.closest("input[data-g]"); if(!i) return;
+    setG(i.dataset.g, Math.max(0, Math.round(+i.value || 0)));
+  });
+
+  document.getElementById("gachaBtn").addEventListener("click", () => {
+    const price = gOf("price");
+    if(!price) return;
+    S.last = addSale("gacha", price);
+    toast(`ガチャ ¥${yen(price)}`);
   });
 }
 
@@ -589,14 +649,17 @@ function buildShift(){
 }
 
 /* ═════════ 描画 ═════════ */
-function renderAll(){ renderSales(); renderCash(); renderShift(); }
+function renderAll(){ renderSales(); renderCash(); renderGacha(); renderShift(); }
 
 function renderSales(){
   const list = salesList();
   const per = {}; PEOPLE.forEach(p => per[p.id] = {n:0, sum:0});
   let total = 0;
-  list.forEach(s => { const b = per[s.person]; if(!b) return;
-    b.n++; b.sum += +s.amount||0; total += +s.amount||0; });
+  list.forEach(s => {
+    total += +s.amount||0;
+    const b = per[s.person]; if(!b) return;
+    b.n++; b.sum += +s.amount||0;
+  });
 
   document.getElementById("tSales").textContent = yen(total);
   document.getElementById("tCount").textContent = list.length + "点";
@@ -621,6 +684,20 @@ function renderSales(){
   renderSum(per, total, list.length);
 }
 
+function renderGacha(){
+  const g = gStats();
+  const btn = document.getElementById("gachaBtn");
+  document.getElementById("gPrice").textContent = "¥" + yen(gOf("price"));
+  document.getElementById("gCount").textContent = g.sold + "回";
+  btn.disabled = !gOf("price");
+  G_FIELDS.forEach(f => {
+    const i = document.querySelector(`#gachaSet input[data-g="${f.k}"]`);
+    if(i && document.activeElement !== i) i.value = gOf(f.k);
+  });
+  document.getElementById("gNote").textContent = g.put
+    ? `ガチャ残り ${g.left}個 ¥${yen(g.leftYen)}` : "";
+}
+
 function renderCash(){
   let sum = 0;
   PEOPLE.forEach(p => {
@@ -634,14 +711,15 @@ function renderCash(){
 function renderSum(per, total, count){
   let fl = 0; PEOPLE.forEach(p => fl += cashOf(p.id));
   document.getElementById("tBox").textContent = yen(fl + total);
-  document.getElementById("sumBody").innerHTML = PEOPLE.map(p => {
-    const c = cashOf(p.id);
-    return `<tr><td><span class="dt" style="--pc:${PC(p.id)}">${p.name}</span></td>
+  const g = gStats();
+  document.getElementById("sumBody").innerHTML = PEOPLE.map(p =>
+    `<tr><td><span class="dt" style="--pc:${PC(p.id)}">${p.name}</span></td>
       <td>${per[p.id].n}</td><td>¥${yen(per[p.id].sum)}</td>
-      <td>¥${yen(c)}</td><td>¥${yen(per[p.id].sum + c)}</td></tr>`;
-  }).join("") +
+      <td>¥${yen(cashOf(p.id))}</td></tr>`).join("") +
+  `<tr><td><span class="dt" style="--pc:var(--p-gacha)">ガチャ</span></td>
+     <td>${g.sold}</td><td>¥${yen(g.sold * gOf("price"))}</td><td>—</td></tr>` +
   `<tr class="sum"><td>合計</td><td>${count}</td><td>¥${yen(total)}</td>
-     <td>¥${yen(fl)}</td><td>¥${yen(total+fl)}</td></tr>`;
+     <td>¥${yen(fl)}</td></tr>`;
 }
 
 function renderShift(){
@@ -725,10 +803,12 @@ function wire(){
     const list = salesList();
     const per = {}; PEOPLE.forEach(p => per[p.id] = {n:0, sum:0});
     let total = 0, fl = 0;
-    list.forEach(s => { const b = per[s.person]; if(b){ b.n++; b.sum += +s.amount||0; total += +s.amount||0; } });
+    list.forEach(s => { total += +s.amount||0; const b = per[s.person]; if(b){ b.n++; b.sum += +s.amount||0; } });
     PEOPLE.forEach(p => fl += cashOf(p.id));
+    const g = gStats();
     const txt = ["PLASTIC GIRLS 集計",
-      ...PEOPLE.map(p => `${p.name} ${per[p.id].n}点 売上¥${yen(per[p.id].sum)} 持込¥${yen(cashOf(p.id))} 返す¥${yen(per[p.id].sum + cashOf(p.id))}`),
+      ...PEOPLE.map(p => `${p.name} ${per[p.id].n}点 売上¥${yen(per[p.id].sum)} 持込¥${yen(cashOf(p.id))}`),
+      `ガチャ ${g.sold}回 売上¥${yen(g.sold * gOf("price"))} 残り${g.left}個 ¥${yen(g.leftYen)}`,
       `売上¥${yen(total)} / 持込¥${yen(fl)} / レジ¥${yen(total+fl)}`].join("\n");
     (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
       .then(()=>toast("コピーしました")).catch(()=>toast("コピーできませんでした"));
@@ -746,7 +826,7 @@ function wire(){
 
 /* ═════════ 起動 ═════════ */
 load();
-buildPeople(); buildPad(); buildFloat(); buildShift();
+buildPeople(); buildPad(); buildFloat(); buildGacha(); buildShift();
 wireTabs(); wire(); renderAmt(); renderWho(); renderAll();
 setDot();
 connect();
