@@ -88,7 +88,7 @@ body{
   font-family:var(--f-ui); font-size:16px; line-height:1.5;
   font-feature-settings:"palt" 1;
   -webkit-font-smoothing:antialiased; overflow-x:hidden;
-  padding-bottom:calc(100px + env(safe-area-inset-bottom));
+  padding-bottom:calc(92px + env(safe-area-inset-bottom));
 }
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
 input{font:inherit;color:inherit}
@@ -114,11 +114,11 @@ input{font:inherit;color:inherit}
   border:1px solid var(--glass-line-soft);border-radius:18px}
 
 .wrap{max-width:540px;margin:0 auto;padding:0 16px}
-.stack{display:flex;flex-direction:column;gap:12px}
+.stack{display:flex;flex-direction:column;gap:9px}
 .hidden{display:none!important}
 
 /* ───────── header ───────── */
-header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
+header{position:sticky;top:0;z-index:40;padding:9px 0 4px;
   background:linear-gradient(to bottom,var(--ground) 20%,transparent)}
 .head{display:flex;align-items:center;gap:10px;padding:0 6px}
 .head h1{font-family:var(--f-num);font-weight:900;font-size:17px;letter-spacing:-.025em;margin:0}
@@ -129,7 +129,7 @@ header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
 @media (prefers-reduced-motion:reduce){.dot{animation:none}}
 
 /* ───────── segmented ───────── */
-.seg{position:relative;display:flex;padding:4px;border-radius:17px;gap:2px;margin-top:12px}
+.seg{position:relative;display:flex;padding:4px;border-radius:17px;gap:2px;margin-top:9px}
 .seg button{flex:1;position:relative;z-index:2;padding:9px 4px;border-radius:13px;font-size:13.5px;
   font-weight:500;color:var(--text-dim);transition:color .28s}
 .seg button[aria-selected="true"]{color:var(--text);font-weight:700}
@@ -139,8 +139,8 @@ header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
 @media (prefers-reduced-motion:reduce){.seg .lens{transition:none}}
 
 /* ───────── total ───────── */
-.tot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:20px 22px 18px}
-.tot .v{font-family:var(--f-num);font-weight:900;font-size:clamp(42px,13vw,60px);
+.tot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:14px 20px 13px}
+.tot .v{font-family:var(--f-num);font-weight:900;font-size:clamp(34px,10.5vw,48px);
   letter-spacing:-.045em;line-height:.92;display:flex;align-items:baseline;gap:2px;
   font-variant-numeric:tabular-nums}
 .tot .v i{font-style:normal;font-size:.44em;font-weight:700;color:var(--text-dim);margin-right:6px}
@@ -148,13 +148,16 @@ header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
   padding-bottom:6px;white-space:nowrap}
 
 /* ───────── people ───────── */
-.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:14px 10px 12px}
-.people button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:4px 0;
+.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:11px 10px 10px}
+.people button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:2px 0;
   border-radius:18px;transition:transform .16s}
 .people button:active{transform:scale(.95)}
-.av{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;flex:none;
-  background:var(--pc);color:var(--on-p);font-weight:700;font-size:13px;letter-spacing:.01em;
-  transition:transform .3s cubic-bezier(.2,1.5,.4,1),box-shadow .3s}
+.av{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:var(--pc);color:var(--on-p);font-weight:700;font-size:12.5px;letter-spacing:.01em;
+  transition:transform .3s cubic-bezier(.2,1.5,.4,1),box-shadow .3s,opacity .3s}
+/* 誰も選んでいない間は全員くっきり。選んだ瞬間、その人だけが残る。 */
+.people.picked button:not([aria-pressed="true"]) .av{opacity:.18}
+.people.picked button:not([aria-pressed="true"]) .s{opacity:.35}
 .people button[aria-pressed="true"] .av{transform:scale(1.08);
   box-shadow:0 9px 22px -8px var(--pc),0 0 0 3.5px var(--ring)}
 .people .s{font-family:var(--f-num);font-size:13px;font-weight:500;color:var(--text-dim);
@@ -162,22 +165,22 @@ header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
 .people button[aria-pressed="true"] .s{color:var(--text);font-weight:700}
 
 /* ───────── amount + pad ───────── */
-.amt{padding:20px;text-align:center;font-family:var(--f-num);font-weight:900;
-  font-size:clamp(48px,16vw,70px);letter-spacing:-.05em;line-height:1;
+.amt{padding:13px 20px 12px;text-align:center;font-family:var(--f-num);font-weight:900;
+  font-size:clamp(38px,12vw,52px);letter-spacing:-.05em;line-height:1;
   font-variant-numeric:tabular-nums}
 .amt i{font-style:normal;font-size:.4em;font-weight:700;color:var(--text-dim);margin-right:6px;
   vertical-align:baseline}
 .amt .z{color:var(--text-faint)}
 
-.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:9px}
-.pad button{height:60px;border-radius:18px;background:var(--glass-2);
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:8px}
+.pad button{height:52px;border-radius:16px;background:var(--glass-2);
   border:1px solid var(--glass-line-soft);box-shadow:var(--inner-lit);
-  font-family:var(--f-num);font-weight:700;font-size:25px;letter-spacing:-.02em;
+  font-family:var(--f-num);font-weight:700;font-size:23px;letter-spacing:-.02em;
   transition:transform .12s,background .2s}
 .pad button:active{transform:scale(.94);background:var(--glass-line)}
 .pad button.u{font-size:18px;font-weight:500;color:var(--text-dim)}
 
-.go{width:100%;height:58px;border-radius:20px;background:var(--pc,var(--accent));color:var(--on-p);
+.go{width:100%;height:52px;border-radius:18px;background:var(--pc,var(--accent));color:var(--on-p);
   font-weight:700;font-size:17px;letter-spacing:.04em;
   box-shadow:0 10px 26px -10px var(--pc,var(--accent));
   transition:transform .16s,opacity .25s,background .3s,box-shadow .3s}
@@ -186,18 +189,21 @@ header{position:sticky;top:0;z-index:40;padding:14px 0 6px;
   border:1px solid var(--glass-line-soft);cursor:not-allowed}
 
 /* ───────── ガチャ ───────── */
-.gacha{display:flex;align-items:center;gap:11px;padding:12px 14px 12px 18px;width:100%;
-  text-align:left;transition:transform .16s}
-.gacha:active{transform:scale(.985)}
-.gacha .gl{font-size:15px;font-weight:700}
-.gacha .gp,.gacha .gn{font-family:var(--f-num);font-size:13.5px;font-weight:500;color:var(--text-dim);
+.gwrap{overflow:hidden}
+.grow{display:flex;align-items:center;gap:10px;padding:9px 11px 9px 17px}
+.ginfo{flex:1;min-width:0;display:flex;align-items:center;gap:8px;text-align:left;padding:5px 0}
+.ginfo .gl{font-size:14.5px;font-weight:700}
+.ginfo .gp,.ginfo .gn{font-family:var(--f-num);font-size:13px;font-weight:500;color:var(--text-dim);
   font-variant-numeric:tabular-nums}
-.gacha .gn{margin-left:auto}
-.gacha .gx{width:36px;height:36px;border-radius:50%;background:var(--p-gacha);color:var(--on-p);
+.ginfo .gn{margin-left:auto}
+.ginfo .gv{font-size:9px;color:var(--text-faint);transition:transform .3s}
+.ginfo[aria-expanded="true"] .gv{transform:rotate(180deg)}
+.gx{width:36px;height:36px;border-radius:50%;background:var(--p-gacha);color:var(--on-p);
   display:grid;place-items:center;font-size:20px;font-weight:700;flex:none;
-  box-shadow:0 6px 16px -8px var(--p-gacha)}
-.gacha[disabled]{opacity:.45}
-.gacha[disabled] .gx{box-shadow:none}
+  box-shadow:0 6px 16px -8px var(--p-gacha);transition:transform .14s,opacity .25s}
+.gx:active{transform:scale(.9)}
+.gx[disabled]{opacity:.35;box-shadow:none}
+.gset{box-shadow:0 -1px 0 var(--hair);padding:2px}
 .gnote{padding:2px 10px 4px;font-family:var(--f-num);font-size:12.5px;color:var(--text-dim);
   font-variant-numeric:tabular-nums;text-align:right}
 
@@ -280,7 +286,7 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
   -webkit-backdrop-filter:blur(34px) saturate(190%);backdrop-filter:blur(34px) saturate(190%);
   border:1px solid var(--glass-line-soft);
   box-shadow:0 18px 44px -14px rgba(10,40,50,.5),var(--inner-lit)}
-.tabs button{flex:1;position:relative;z-index:2;height:48px;border-radius:19px;
+.tabs button{flex:1;position:relative;z-index:2;height:44px;border-radius:17px;
   display:grid;place-items:center;color:var(--text-dim);font-size:14px;font-weight:500;
   transition:color .3s}
 .tabs button[aria-selected="true"]{color:var(--text);font-weight:700}
@@ -322,10 +328,16 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
       <div class="amt g" id="amt"></div>
       <div class="pad g" id="pad"></div>
       <button class="go" id="go" disabled>記録</button>
-      <button class="gacha g" id="gachaBtn">
-        <span class="gl">ガチャ</span><span class="gp" id="gPrice">¥0</span>
-        <span class="gn" id="gCount">0回</span><span class="gx">＋</span>
-      </button>
+      <div class="gwrap g">
+        <div class="grow">
+          <button class="ginfo" id="gachaCfg" aria-expanded="false">
+            <span class="gl">ガチャ</span><span class="gp" id="gPrice">¥0</span>
+            <span class="gv">▼</span><span class="gn" id="gCount">0回</span>
+          </button>
+          <button class="gx" id="gachaAdd" aria-label="ガチャを1回">＋</button>
+        </div>
+        <div class="gset" id="gachaSet" hidden></div>
+      </div>
       <div class="rows g" id="recent"></div>
     </div>
 
@@ -333,7 +345,6 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
       <div class="tot g"><div class="v"><i>¥</i><span id="tFloat">0</span></div>
         <div class="n">持ち込み</div></div>
       <div class="g" id="floatRows" style="padding:4px"></div>
-      <div class="g" id="gachaSet" style="padding:4px"></div>
     </div>
 
     <div id="sub-sum" class="stack hidden" style="margin-top:12px">
@@ -549,6 +560,7 @@ function buildPeople(){
   });
 }
 function renderWho(){
+  document.getElementById("people").classList.toggle("picked", !!S.who);
   document.querySelectorAll("#people button").forEach(b =>
     b.setAttribute("aria-pressed", String(b.dataset.p === S.who)));
   const go = document.getElementById("go");
@@ -618,12 +630,22 @@ function buildGacha(){
     setG(i.dataset.g, Math.max(0, Math.round(+i.value || 0)));
   });
 
-  document.getElementById("gachaBtn").addEventListener("click", () => {
+  const cfg = document.getElementById("gachaCfg");
+  cfg.addEventListener("click", () => {
+    const open = cfg.getAttribute("aria-expanded") !== "true";
+    cfg.setAttribute("aria-expanded", String(open));
+    el.hidden = !open;
+  });
+
+  document.getElementById("gachaAdd").addEventListener("click", () => {
     const price = gOf("price");
-    if(!price) return;
+    if(!price){ cfg.click(); return; }
     S.last = addSale("gacha", price);
     toast(`ガチャ ¥${yen(price)}`);
   });
+
+  /* 値段が未設定なら最初から開いておく（設定の在り処が分かるように） */
+  if(!gOf("price")){ cfg.setAttribute("aria-expanded","true"); el.hidden = false; }
 }
 
 function buildShift(){
@@ -686,7 +708,7 @@ function renderSales(){
 
 function renderGacha(){
   const g = gStats();
-  const btn = document.getElementById("gachaBtn");
+  const btn = document.getElementById("gachaAdd");
   document.getElementById("gPrice").textContent = "¥" + yen(gOf("price"));
   document.getElementById("gCount").textContent = g.sold + "回";
   btn.disabled = !gOf("price");
