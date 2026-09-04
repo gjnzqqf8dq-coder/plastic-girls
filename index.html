@@ -35,6 +35,7 @@
 
   --p-kouki:#2C6B51; --p-aguri:#2E6E92; --p-akari:#A9591F; --p-kento:#6C4483;
   --p-gacha:#436A78;
+  --chip:#6E7D84; --chip-ink:#FFFFFF;
   --on-p:#FFFFFF; --ring:rgba(255,255,255,.9);
 
   --f-num:"Schibsted Grotesk","M PLUS 2",system-ui,sans-serif;
@@ -58,6 +59,7 @@
   --warn:#F0A272;
   --p-kouki:#6FCE9E; --p-aguri:#74BEE8; --p-akari:#E9A366; --p-kento:#C296D8;
   --p-gacha:#93BECD;
+  --chip:#42525A; --chip-ink:#E9F2EF;
   --on-p:#08191F; --ring:rgba(255,255,255,.5);
 }}
 :root[data-theme="dark"]{
@@ -78,6 +80,7 @@
   --warn:#F0A272;
   --p-kouki:#6FCE9E; --p-aguri:#74BEE8; --p-akari:#E9A366; --p-kento:#C296D8;
   --p-gacha:#93BECD;
+  --chip:#42525A; --chip-ink:#E9F2EF;
   --on-p:#08191F; --ring:rgba(255,255,255,.5);
 }
 
@@ -154,12 +157,11 @@ header{position:sticky;top:0;z-index:40;padding:9px 0 4px;
 .people button:active{transform:scale(.95)}
 .av{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;flex:none;
   background:var(--pc);color:var(--on-p);font-weight:700;font-size:11px;letter-spacing:0;
-  transition:transform .3s cubic-bezier(.2,1.5,.4,1),box-shadow .3s,opacity .3s}
-/* 誰も選んでいない間は全員くっきり。選んだ瞬間、その人だけが残る。 */
-.people.picked button:not([aria-pressed="true"]) .av{opacity:.18}
-.people.picked button:not([aria-pressed="true"]) .s{opacity:.35}
-.people button[aria-pressed="true"] .av{transform:scale(1.08);
-  box-shadow:0 9px 22px -8px var(--pc),0 0 0 3.5px var(--ring)}
+  transition:transform .3s cubic-bezier(.2,1.5,.4,1),box-shadow .3s,background .25s,color .25s}
+/* 押されるまでは全員グレー。押した人だけに色がつく。 */
+.people .av{background:var(--chip);color:var(--chip-ink)}
+.people button[aria-pressed="true"] .av{background:var(--pc);color:var(--on-p);
+  transform:scale(1.09);box-shadow:0 9px 22px -8px var(--pc),0 0 0 3.5px var(--ring)}
 .people .s{font-family:var(--f-num);font-size:11.5px;font-weight:500;color:var(--text-dim);
   font-variant-numeric:tabular-nums}
 .people button[aria-pressed="true"] .s{color:var(--text);font-weight:700}
@@ -551,7 +553,6 @@ function buildPeople(){
   });
 }
 function renderWho(){
-  document.getElementById("people").classList.toggle("picked", !!S.who);
   document.querySelectorAll("#people button").forEach(b =>
     b.setAttribute("aria-pressed", String(b.dataset.p === S.who)));
   const go = document.getElementById("go");
