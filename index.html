@@ -148,19 +148,19 @@ header{position:sticky;top:0;z-index:40;padding:9px 0 4px;
   padding-bottom:6px;white-space:nowrap}
 
 /* ───────── people ───────── */
-.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:11px 10px 10px}
+.people{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:11px 8px 10px}
 .people button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:2px 0;
   border-radius:18px;transition:transform .16s}
 .people button:active{transform:scale(.95)}
-.av{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;flex:none;
-  background:var(--pc);color:var(--on-p);font-weight:700;font-size:12.5px;letter-spacing:.01em;
+.av{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:var(--pc);color:var(--on-p);font-weight:700;font-size:11px;letter-spacing:0;
   transition:transform .3s cubic-bezier(.2,1.5,.4,1),box-shadow .3s,opacity .3s}
 /* 誰も選んでいない間は全員くっきり。選んだ瞬間、その人だけが残る。 */
 .people.picked button:not([aria-pressed="true"]) .av{opacity:.18}
 .people.picked button:not([aria-pressed="true"]) .s{opacity:.35}
 .people button[aria-pressed="true"] .av{transform:scale(1.08);
   box-shadow:0 9px 22px -8px var(--pc),0 0 0 3.5px var(--ring)}
-.people .s{font-family:var(--f-num);font-size:13px;font-weight:500;color:var(--text-dim);
+.people .s{font-family:var(--f-num);font-size:11.5px;font-weight:500;color:var(--text-dim);
   font-variant-numeric:tabular-nums}
 .people button[aria-pressed="true"] .s{color:var(--text);font-weight:700}
 
@@ -189,21 +189,9 @@ header{position:sticky;top:0;z-index:40;padding:9px 0 4px;
   border:1px solid var(--glass-line-soft);cursor:not-allowed}
 
 /* ───────── ガチャ ───────── */
-.gwrap{overflow:hidden}
-.grow{display:flex;align-items:center;gap:10px;padding:9px 11px 9px 17px}
-.ginfo{flex:1;min-width:0;display:flex;align-items:center;gap:8px;text-align:left;padding:5px 0}
-.ginfo .gl{font-size:14.5px;font-weight:700}
-.ginfo .gp,.ginfo .gn{font-family:var(--f-num);font-size:13px;font-weight:500;color:var(--text-dim);
-  font-variant-numeric:tabular-nums}
-.ginfo .gn{margin-left:auto}
-.ginfo .gv{font-size:9px;color:var(--text-faint);transition:transform .3s}
-.ginfo[aria-expanded="true"] .gv{transform:rotate(180deg)}
-.gx{width:36px;height:36px;border-radius:50%;background:var(--p-gacha);color:var(--on-p);
-  display:grid;place-items:center;font-size:20px;font-weight:700;flex:none;
-  box-shadow:0 6px 16px -8px var(--p-gacha);transition:transform .14s,opacity .25s}
-.gx:active{transform:scale(.9)}
-.gx[disabled]{opacity:.35;box-shadow:none}
-.gset{box-shadow:0 -1px 0 var(--hair);padding:2px}
+.tot .v .suf{font-style:normal;font-size:.38em;font-weight:700;color:var(--text-dim);margin-left:6px}
+.f .n em{display:block;font-style:normal;font-family:var(--f-num);font-size:11px;font-weight:500;
+  color:var(--text-faint);font-variant-numeric:tabular-nums;margin-top:1px}
 .gnote{padding:2px 10px 4px;font-family:var(--f-num);font-size:12.5px;color:var(--text-dim);
   font-variant-numeric:tabular-nums;text-align:right}
 
@@ -238,7 +226,7 @@ header{position:sticky;top:0;z-index:40;padding:9px 0 4px;
   font-variant-numeric:tabular-nums;-moz-appearance:textfield}
 .f input::-webkit-outer-spin-button,.f input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .f .u{width:18px;font-size:12.5px;color:var(--text-dim);flex:none}
-#gachaSet .f input{width:96px}
+#gachaRows .f input{width:64px;text-align:center}
 
 /* ───────── table ───────── */
 .tw{overflow-x:auto;padding:6px 8px}
@@ -317,6 +305,7 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
       <button role="tab" aria-selected="true" data-sub="sales">売上</button>
       <button role="tab" aria-selected="false" data-sub="float">持ち込み</button>
       <button role="tab" aria-selected="false" data-sub="sum">集計</button>
+      <button role="tab" aria-selected="false" data-sub="gacha">ガチャ</button>
     </div>
 
     <div id="sub-sales" class="stack" style="margin-top:12px">
@@ -328,16 +317,6 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
       <div class="amt g" id="amt"></div>
       <div class="pad g" id="pad"></div>
       <button class="go" id="go" disabled>記録</button>
-      <div class="gwrap g">
-        <div class="grow">
-          <button class="ginfo" id="gachaCfg" aria-expanded="false">
-            <span class="gl">ガチャ</span><span class="gp" id="gPrice">¥0</span>
-            <span class="gv">▼</span><span class="gn" id="gCount">0回</span>
-          </button>
-          <button class="gx" id="gachaAdd" aria-label="ガチャを1回">＋</button>
-        </div>
-        <div class="gset" id="gachaSet" hidden></div>
-      </div>
       <div class="rows g" id="recent"></div>
     </div>
 
@@ -356,6 +335,15 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
       </table>
       <div class="gnote" id="gNote"></div></div>
       <button class="copy" id="copyBtn">集計をコピー</button>
+    </div>
+
+    <div id="sub-gacha" class="stack hidden" style="margin-top:12px">
+      <div class="tot g">
+        <div class="v"><span id="gLeft">0</span><i class="suf">個</i></div>
+        <div class="n">ガチャの残り</div>
+      </div>
+      <div class="g" id="gachaRows" style="padding:4px"></div>
+      <div class="gnote" id="gNote2"></div>
     </div>
   </section>
 
@@ -385,7 +373,8 @@ const PEOPLE = [
   {id:"kento", name:"ケント"}
 ];
 const GACHA = {id:"gacha", name:"ガチャ"};
-const P  = Object.fromEntries([...PEOPLE, GACHA].map(p=>[p.id,p]));
+const PICK = [...PEOPLE, GACHA];
+const P  = Object.fromEntries(PICK.map(p=>[p.id,p]));
 const PC = id => `var(--p-${id})`;
 
 const DAYS = [
@@ -458,12 +447,14 @@ const salesList = () => Object.keys(doc.sales)
   .sort((x,y) => (y.ts||0) - (x.ts||0));
 
 const cashOf  = id => +((doc.cash[id]||{}).v || 0);
-const gOf     = k  => +(((doc.gacha||{})[k]||{}).v || 0);
+const gOf     = id => +(((doc.gacha||{})[id]||{}).v || 0);   /* その人が入れた個数 */
 const gStats  = () => {
-  const put = gOf("count"), cost = gOf("cost");
-  const sold = salesList().filter(s => s.person === "gacha").length;
-  const left = Math.max(0, put - sold);
-  return {put, cost, sold, left, unit: put ? cost / put : 0, leftYen: Math.round(put ? cost / put * left : 0)};
+  const gs   = salesList().filter(s => s.person === "gacha");
+  const sold = gs.length;
+  const sum  = gs.reduce((n,s) => n + (+s.amount||0), 0);
+  const put  = PEOPLE.reduce((n,p) => n + gOf(p.id), 0);
+  return {put, sold, sum, left: Math.max(0, put - sold),
+          share: id => put ? Math.round(sum * gOf(id) / put) : 0};
 };
 const shiftOf = (k,p) => !!(((doc.shift[k]||{})[p])||{}).v;
 
@@ -550,7 +541,7 @@ const avatar = p => `<span class="av" style="--pc:${PC(p.id)}">${p.name}</span>`
 
 function buildPeople(){
   const el = document.getElementById("people");
-  el.innerHTML = PEOPLE.map(p =>
+  el.innerHTML = PICK.map(p =>
     `<button data-p="${p.id}" aria-pressed="false" aria-label="${p.name}">
        ${avatar(p)}<span class="s" data-s="${p.id}">¥0</span></button>`).join("");
   el.addEventListener("click", e => {
@@ -611,41 +602,26 @@ function buildFloat(){
   });
 }
 
-const G_FIELDS = [
-  {k:"price", label:"ガチャ 1回", step:100, unit:"円"},
-  {k:"count", label:"入れた個数",  step:1,   unit:"個"},
-  {k:"cost",  label:"入れた金額",  step:100, unit:"円"}
-];
 function buildGacha(){
-  const el = document.getElementById("gachaSet");
-  el.innerHTML = G_FIELDS.map(f => `
-    <div class="f" style="--pc:var(--p-gacha)">
-      <span class="d"></span><span class="n">${f.label}</span>
-      <input type="number" step="${f.step}" min="0" inputmode="numeric"
-             data-g="${f.k}" value="0" aria-label="ガチャ ${f.label}">
-      <span class="u">${f.unit}</span>
+  const el = document.getElementById("gachaRows");
+  el.innerHTML = PEOPLE.map(p => `
+    <div class="f" style="--pc:${PC(p.id)}">
+      <span class="d"></span>
+      <span class="n">${p.name}<em data-gs="${p.id}">¥0</em></span>
+      <button data-g="${p.id}" data-d="-1" aria-label="${p.name} 1個減らす">−</button>
+      <input type="number" step="1" min="0" inputmode="numeric"
+             data-g="${p.id}" value="0" aria-label="${p.name} が入れた個数">
+      <button data-g="${p.id}" data-d="1" aria-label="${p.name} 1個増やす">＋</button>
+      <span class="u">個</span>
     </div>`).join("");
+  el.addEventListener("click", e => {
+    const b = e.target.closest("button[data-d]"); if(!b) return;
+    setG(b.dataset.g, Math.max(0, gOf(b.dataset.g) + (+b.dataset.d)));
+  });
   el.addEventListener("change", e => {
     const i = e.target.closest("input[data-g]"); if(!i) return;
     setG(i.dataset.g, Math.max(0, Math.round(+i.value || 0)));
   });
-
-  const cfg = document.getElementById("gachaCfg");
-  cfg.addEventListener("click", () => {
-    const open = cfg.getAttribute("aria-expanded") !== "true";
-    cfg.setAttribute("aria-expanded", String(open));
-    el.hidden = !open;
-  });
-
-  document.getElementById("gachaAdd").addEventListener("click", () => {
-    const price = gOf("price");
-    if(!price){ cfg.click(); return; }
-    S.last = addSale("gacha", price);
-    toast(`ガチャ ¥${yen(price)}`);
-  });
-
-  /* 値段が未設定なら最初から開いておく（設定の在り処が分かるように） */
-  if(!gOf("price")){ cfg.setAttribute("aria-expanded","true"); el.hidden = false; }
 }
 
 function buildShift(){
@@ -675,7 +651,7 @@ function renderAll(){ renderSales(); renderCash(); renderGacha(); renderShift();
 
 function renderSales(){
   const list = salesList();
-  const per = {}; PEOPLE.forEach(p => per[p.id] = {n:0, sum:0});
+  const per = {}; PICK.forEach(p => per[p.id] = {n:0, sum:0});
   let total = 0;
   list.forEach(s => {
     total += +s.amount||0;
@@ -685,7 +661,7 @@ function renderSales(){
 
   document.getElementById("tSales").textContent = yen(total);
   document.getElementById("tCount").textContent = list.length + "点";
-  PEOPLE.forEach(p => {
+  PICK.forEach(p => {
     const el = document.querySelector(`[data-s="${p.id}"]`);
     if(el) el.textContent = "¥" + yen(per[p.id].sum);
   });
@@ -708,16 +684,16 @@ function renderSales(){
 
 function renderGacha(){
   const g = gStats();
-  const btn = document.getElementById("gachaAdd");
-  document.getElementById("gPrice").textContent = "¥" + yen(gOf("price"));
-  document.getElementById("gCount").textContent = g.sold + "回";
-  btn.disabled = !gOf("price");
-  G_FIELDS.forEach(f => {
-    const i = document.querySelector(`#gachaSet input[data-g="${f.k}"]`);
-    if(i && document.activeElement !== i) i.value = gOf(f.k);
+  document.getElementById("gLeft").textContent = yen(g.left);
+  PEOPLE.forEach(p => {
+    const i = document.querySelector(`#gachaRows input[data-g="${p.id}"]`);
+    if(i && document.activeElement !== i) i.value = gOf(p.id);
+    const sh = document.querySelector(`[data-gs="${p.id}"]`);
+    if(sh) sh.textContent = "¥" + yen(g.share(p.id));
   });
-  document.getElementById("gNote").textContent = g.put
-    ? `ガチャ残り ${g.left}個 ¥${yen(g.leftYen)}` : "";
+  const line = g.put ? `入れた ${g.put}個 ・ 売れた ${g.sold}回` : "";
+  document.getElementById("gNote2").textContent = line;
+  document.getElementById("gNote").textContent = g.put ? `ガチャ 残り${g.left}個` : "";
 }
 
 function renderCash(){
@@ -733,13 +709,10 @@ function renderCash(){
 function renderSum(per, total, count){
   let fl = 0; PEOPLE.forEach(p => fl += cashOf(p.id));
   document.getElementById("tBox").textContent = yen(fl + total);
-  const g = gStats();
-  document.getElementById("sumBody").innerHTML = PEOPLE.map(p =>
+  document.getElementById("sumBody").innerHTML = PICK.map(p =>
     `<tr><td><span class="dt" style="--pc:${PC(p.id)}">${p.name}</span></td>
       <td>${per[p.id].n}</td><td>¥${yen(per[p.id].sum)}</td>
-      <td>¥${yen(cashOf(p.id))}</td></tr>`).join("") +
-  `<tr><td><span class="dt" style="--pc:var(--p-gacha)">ガチャ</span></td>
-     <td>${g.sold}</td><td>¥${yen(g.sold * gOf("price"))}</td><td>—</td></tr>` +
+      <td>${p.id === "gacha" ? "—" : "¥" + yen(cashOf(p.id))}</td></tr>`).join("") +
   `<tr class="sum"><td>合計</td><td>${count}</td><td>¥${yen(total)}</td>
      <td>¥${yen(fl)}</td></tr>`;
 }
@@ -800,7 +773,7 @@ function wireTabs(){
   seg.addEventListener("click", e => {
     const b = e.target.closest("button[data-sub]"); if(!b) return;
     sb.forEach(x => x.setAttribute("aria-selected", String(x === b)));
-    ["sales","float","sum"].forEach(k =>
+    ["sales","float","sum","gacha"].forEach(k =>
       document.getElementById("sub-"+k).classList.toggle("hidden", k !== b.dataset.sub));
     segMove();
   });
@@ -823,14 +796,14 @@ function wire(){
 
   document.getElementById("copyBtn").addEventListener("click", () => {
     const list = salesList();
-    const per = {}; PEOPLE.forEach(p => per[p.id] = {n:0, sum:0});
+    const per = {}; PICK.forEach(p => per[p.id] = {n:0, sum:0});
     let total = 0, fl = 0;
     list.forEach(s => { total += +s.amount||0; const b = per[s.person]; if(b){ b.n++; b.sum += +s.amount||0; } });
     PEOPLE.forEach(p => fl += cashOf(p.id));
     const g = gStats();
     const txt = ["PLASTIC GIRLS 集計",
-      ...PEOPLE.map(p => `${p.name} ${per[p.id].n}点 売上¥${yen(per[p.id].sum)} 持込¥${yen(cashOf(p.id))}`),
-      `ガチャ ${g.sold}回 売上¥${yen(g.sold * gOf("price"))} 残り${g.left}個 ¥${yen(g.leftYen)}`,
+      ...PEOPLE.map(p => `${p.name} ${per[p.id].n}点 売上¥${yen(per[p.id].sum)} 持込¥${yen(cashOf(p.id))} ガチャ分¥${yen(g.share(p.id))}`),
+      `ガチャ ${g.sold}回 売上¥${yen(g.sum)} 入れた${g.put}個 残り${g.left}個`,
       `売上¥${yen(total)} / 持込¥${yen(fl)} / レジ¥${yen(total+fl)}`].join("\n");
     (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
       .then(()=>toast("コピーしました")).catch(()=>toast("コピーできませんでした"));
