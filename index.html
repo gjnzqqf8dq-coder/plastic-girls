@@ -306,7 +306,7 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
 </div></div></header>
 
 <main class="wrap">
-  <section id="v-money">
+  <section id="v-money" class="hidden">
     <div class="seg g-thin" id="seg" role="tablist">
       <div class="lens"></div>
       <button role="tab" aria-selected="true" data-sub="sales">売上</button>
@@ -354,7 +354,7 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
     </div>
   </section>
 
-  <section id="v-shift" class="stack hidden" style="margin-top:12px">
+  <section id="v-shift" class="stack" style="margin-top:12px">
     <div class="hrs g" id="hrs"></div>
     <div id="days" class="stack"></div>
   </section>
@@ -362,8 +362,8 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-conte
 
 <nav><div class="tabs" id="tabs" role="tablist">
   <div class="lens"></div>
-  <button role="tab" aria-selected="true" data-view="money">お金</button>
-  <button role="tab" aria-selected="false" data-view="shift">シフト</button>
+  <button role="tab" aria-selected="false" data-view="money">お金</button>
+  <button role="tab" aria-selected="true" data-view="shift">シフト</button>
 </div></nav>
 
 <div id="toast"></div>
@@ -743,20 +743,28 @@ function renderShift(){
 /* ═════════ タブ ═════════ */
 function lens(box, btns){
   const l = box.querySelector(".lens");
-  const move = () => {
+  const apply = () => {
     const on = btns.find(b => b.getAttribute("aria-selected") === "true") || btns[0];
     const br = on.getBoundingClientRect(), cr = box.getBoundingClientRect();
-    if(!br.width) return;
+    if(!br.width) return false;                 /* まだ表示されていない */
     const bw = parseFloat(getComputedStyle(box).borderLeftWidth) || 0;
     l.style.width = br.width + "px";
     l.style.transform = `translateX(${br.left - cr.left - bw}px)`;
+    return true;
   };
-  requestAnimationFrame(move);
-  addEventListener("resize", move);
-  addEventListener("load", move);
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(move);
-  if(window.ResizeObserver) new ResizeObserver(move).observe(box);
-  return move;
+  /* 隠れたまま読み込まれたタブは幅が測れない。見えるまで測り直す。 */
+  const move = (tries) => {
+    if(apply()) return;
+    const n = (tries || 0) + 1;
+    if(n < 120) requestAnimationFrame(() => move(n));
+  };
+  const kick = () => move(0);
+  kick();
+  addEventListener("resize", kick);
+  addEventListener("load", kick);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(kick);
+  if(window.ResizeObserver) new ResizeObserver(kick).observe(box);
+  return kick;
 }
 
 let segMove = () => {};
