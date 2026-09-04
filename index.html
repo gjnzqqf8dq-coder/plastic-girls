@@ -86,6 +86,8 @@
 
 /* ───────── base ───────── */
 *{box-sizing:border-box}
+/* 連打でダブルタップ拡大が起きないように。ピンチでの拡大は残す。 */
+html,body{touch-action:manipulation}
 body{
   margin:0; background:var(--ground); color:var(--text);
   font-family:var(--f-ui); font-size:16px; line-height:1.5;
@@ -93,8 +95,11 @@ body{
   -webkit-font-smoothing:antialiased; overflow-x:hidden;
   padding-bottom:calc(92px + env(safe-area-inset-bottom));
 }
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
-input{font:inherit;color:inherit}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input{font:inherit;color:inherit;touch-action:manipulation}
+.cell,.av,.pad button,.f button,.people button{touch-action:manipulation}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
 .num{font-family:var(--f-num);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 
@@ -224,7 +229,7 @@ header{position:sticky;top:0;z-index:40;padding:9px 0 4px;
   display:grid;place-items:center;transition:transform .13s}
 .f button:active{transform:scale(.9)}
 .f input{width:88px;text-align:right;background:var(--glass-3);border:1px solid var(--glass-line-soft);
-  border-radius:12px;padding:8px 10px;font-family:var(--f-num);font-size:15px;font-weight:500;
+  border-radius:12px;padding:7px 10px;font-family:var(--f-num);font-size:16px;font-weight:500;
   font-variant-numeric:tabular-nums;-moz-appearance:textfield}
 .f input::-webkit-outer-spin-button,.f input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .f .u{width:18px;font-size:12.5px;color:var(--text-dim);flex:none}
